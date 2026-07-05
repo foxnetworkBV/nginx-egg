@@ -5,7 +5,18 @@ echo -e "[SETUP] Install packages"
 apt-get update -qq > /dev/null 2>&1 && apt-get install -qq > /dev/null 2>&1 -y git wget perl perl-doc fcgiwrap
 
 # Add VERSION file
-wget -q -O - https://api.tavuru.de/version/foxnetworkBV/nginx-egg | grep -o '"version":"[^"]*"' | cut -d'"' -f4 | head -1 > /mnt/server/VERSION
+VERSION_API_URL="https://api.tavuru.de/version/foxnetworkBV/nginx-egg"
+VERSION_RESPONSE=$(wget -q -O - "${VERSION_API_URL}")
+
+# Accept compact and spaced JSON formats, then fallback if version is missing/placeholder.
+VERSION_VALUE=$(echo "${VERSION_RESPONSE}" | grep -oE '"version"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | cut -d'"' -f4)
+if [ -z "${VERSION_VALUE}" ] || [ "${VERSION_VALUE}" = "latest" ]; then
+    VERSION_VALUE=$(echo "${VERSION_RESPONSE}" | grep -oE '"published_at"[[:space:]]*:[[:space:]]*"[^"]*"' | head -1 | cut -d'"' -f4)
+fi
+if [ -z "${VERSION_VALUE}" ]; then
+    VERSION_VALUE="unknown"
+fi
+echo "${VERSION_VALUE}" > /mnt/server/VERSION
 
 # Change to server directory
 cd /mnt/server
