@@ -4,7 +4,7 @@ sed -i 's/\r$//' "$0"
 find modules -type f -name "*.sh" -exec sed -i 's/\r$//' {} + 2>/dev/null || true
 
 set -euo pipefail
-trap 'echo -e "${RED}[Orchestrator] Error on line $LINENO${NC}"' ERR
+trap 'echo -e "${RED}[FoxNetwork BV] Error on line $LINENO${NC}"' ERR
 
 # Enable nullglob so non-matching globs expand to empty
 shopt -s nullglob
@@ -19,11 +19,11 @@ NC='\033[0m'
 header() {
   echo -e " "
   echo -e "\n${BLUE}───────────────────────────────────────────────${NC}"
-  echo -e "${BOLD_BLUE}[Orchestrator] $1${NC}"
+  echo -e "${BOLD_BLUE}[FoxNetwork BV] $1${NC}"
 }
 
 # Start orchestration
-echo -e "\n${BOLD_BLUE}[Orchestrator] Module orchestration starting...${NC}"
+echo -e "\n${BOLD_BLUE}[FoxNetwork BV] Module orchestration starting...${NC}"
 
 # Helper to test enabled status: true or 1
 is_enabled() { [[ "$1" =~ ^(true|1)$ ]]; }
@@ -72,4 +72,4 @@ if is_enabled "$NGINX_STATUS"; then
 fi
 
 # Completion message if nginx skipped
-echo -e "\n${GREEN}[Orchestrator] Module orchestration complete.${NC}\n"
+echo -e "\n${GREEN}[FoxNetwork BV] Module orchestration complete.${NC}\n"
