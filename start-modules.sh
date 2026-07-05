@@ -22,8 +22,8 @@ header() {
   echo -e "${BOLD_BLUE}[FoxNetwork BV] $1${NC}"
 }
 
-# Start orchestration
-echo -e "\n${BOLD_BLUE}[FoxNetwork BV] Module orchestration starting...${NC}"
+# Start FoxNetwork BV
+echo -e "\n${BOLD_BLUE}[FoxNetwork BV] Module FoxNetwork BV starting...${NC}"
 
 # Helper to test enabled status: true or 1
 is_enabled() { [[ "$1" =~ ^(true|1)$ ]]; }
@@ -72,4 +72,4 @@ if is_enabled "$NGINX_STATUS"; then
 fi
 
 # Completion message if nginx skipped
-echo -e "\n${GREEN}[FoxNetwork BV] Module orchestration complete.${NC}\n"
+echo -e "\n${GREEN}[FoxNetwork BV] Module FoxNetwork BV complete.${NC}\n"
